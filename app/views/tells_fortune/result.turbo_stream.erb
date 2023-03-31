@@ -1,0 +1,35 @@
+<%= turbo_stream.replace "question_title" do %>
+  <% if @count < 10 %>
+    <div id="question_title">
+      <b>Question <%= @count.to_i + 1 %> : </b> <%= @question %>
+    </div>
+  <% else %>
+    <div id="result"><b>Here is your Fortune :</b> <%= @result %></div>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "question-form" do %>
+  <% if @count < 10 %>
+    <div id="question-form" style="display: block;margin-top: 10px;">
+    <%= form_with url: result_path, scope: "person" do |f| %>
+      <%= hidden_field_tag :count, nil, id: "hidden-counter", value: @count %>
+      <%= f.radio_button(:answer, "Yes", class: "radio_answer", required: true) %><label> Yes</label>
+      <%= f.radio_button(:answer, "No", class: "radio_answer") %><label> No</label>
+      <%= f.submit "Next" %>
+    <% end %>
+  </div>
+  <% else %>
+    <div id="question-form" style="display: none;">
+    <%= form_with url: result_path, scope: "person" do |f| %>
+      <%= hidden_field_tag :count, nil, id: "hidden-counter", value: @count %>
+      <%= f.radio_button(:answer, "Yes", class: "radio_answer", required: true) %><label> Yes</label>
+      <%= f.radio_button(:answer, "No", class: "radio_answer") %><label> No</label>
+      <%= f.submit "Next" %>
+    <% end %>
+  </div>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "hidden-counter" do %>
+  <%= hidden_field_tag :count, nil, id: "hidden-counter", value: @count %>
+<% end %>

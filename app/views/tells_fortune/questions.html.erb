@@ -1,0 +1,18 @@
+<div data-controller="tells-fortune">
+  <h1 style="text-align: center;">Tells a Fortune</h1>
+
+  <hr/>
+  <div style="text-align: center;">
+    <div id="question_title">
+      <b>Question <%= @count.to_i + 1 %> : </b> <%= @question %>
+    </div>
+    <div id="question-form" style="display: block;margin-top: 10px;">
+      <%= form_with url: result_path, scope: "person" do |f| %>
+        <%= hidden_field_tag :count, nil, id: "hidden-counter", value: @count %>
+        <%= f.radio_button(:answer, "Yes", class: "radio_answer", required: true) %><label> Yes</label>
+        <%= f.radio_button(:answer, "No", class: "radio_answer") %><label> No</label>
+        <%= f.submit "Next" %>
+      <% end %>
+    </div>
+  </div>
+</div>
